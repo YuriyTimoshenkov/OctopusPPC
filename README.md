@@ -1,12 +1,11 @@
-OctopusPPC
-==========
+##OctopusPPC
 
-[ Compile ]
+###[ Compile ]
 
 erl -make
 
 
-[ Run ]
+###[ Run ]
 
 erl -pa ebin/
 
@@ -19,7 +18,7 @@ Account, Amount, Payment Gate Id, Service Id
 pay('bob@gmail.com', 13.13, 1, 1).
 
 
-[ Example ]
+###[ Example ]
 
 1> application:load(octopusppc).
 ok
