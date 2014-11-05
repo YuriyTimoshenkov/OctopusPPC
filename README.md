@@ -2,20 +2,20 @@
 
 ###[ Compile ]
 
-erl -make
+1>erl -make
 
 
 ###[ Run ]
 
-erl -pa ebin/
+1>erl -pa ebin/
 
-application:load(octopusppc).
-application:start(octopusppc).
+2>application:load(octopusppc).
+3>application:start(octopusppc).
 
 /*
 Account, Amount, Payment Gate Id, Service Id
 */
-pay('bob@gmail.com', 13.13, 1, 1).
+4>pay('bob@gmail.com', 13.13, 1, 1).
 
 
 ###[ Example ]
