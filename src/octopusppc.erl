@@ -6,7 +6,15 @@
 
 
 start(_StartType, _StartArgs) ->
-    octopusppc_sup:start_link().
+  Dispatch = cowboy_router:compile([
+    {'_', [
+      {"/", toppage_handler, []}
+    ]}
+  ]),
+  {ok, _} = cowboy:start_http(http, 100, [{port, 8083}], [
+    {env, [{dispatch, Dispatch}]}
+  ]),
+  octopusppc_sup:start_link().
 
 stop(_State) ->
     ok.

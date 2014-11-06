@@ -5,7 +5,8 @@
   {registered, octopusppc},
   {applications, [
                   kernel,
-                  stdlib
+                  stdlib,
+                  cowboy
                  ]},
   {mod, {octopusppc, []}},
   {env, []}
