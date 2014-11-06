@@ -26,7 +26,7 @@ handle_call({pay, P = #payment{}}, _From, State) ->
   {ok, WPid} = workflow_pay:start({P, self()}),
   WMRef = erlang:monitor(process,WPid),
   {ClientPid, _} = _From,
-  {reply, WPid, [{WPid,#workflow{clientPid = ClientPid, workflowPid = WMRef, workflowMonitorRef = WMRef, payment = P}}| State]};
+  {reply, WPid, [{WPid,#workflow{client_pid = ClientPid, workflow_pid = WMRef, workflow_monitor_ref = WMRef, payment = P}}| State]};
 
 handle_call(getState, _From, State) ->
   {reply, State, State};
@@ -34,8 +34,8 @@ handle_call(getState, _From, State) ->
 handle_call({Payment_result, P = #payment{}}, _From, State) ->
   {WorkflowPid, _} = _From,
   {_,Workflow = #workflow{}} = lists:keyfind(WorkflowPid, 1, State),
-  CallerPid = Workflow#workflow.clientPid,
-  WorkflowRef = Workflow#workflow.workflowMonitorRef,
+  CallerPid = Workflow#workflow.client_pid,
+  WorkflowRef = Workflow#workflow.workflow_monitor_ref,
   erlang:demonitor(WorkflowRef),
   CallerPid ! {Payment_result, P},
   NewState = lists:keydelete(_From, 1, State),
@@ -44,7 +44,7 @@ handle_call({Payment_result, P = #payment{}}, _From, State) ->
 
 handle_info({'DOWN', _, process, _Pid, _}, State) ->
     {_,Workflow = #workflow{}} = lists:keyfind(_Pid, 1, State),
-    CallerPid = Workflow#workflow.clientPid,
+    CallerPid = Workflow#workflow.client_pid,
     CallerPid ! {payment_failed,Workflow#workflow.payment},
     NewState = lists:keydelete(_Pid, 1, State),
     {noreply, NewState}.

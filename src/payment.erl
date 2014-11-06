@@ -1,13 +1,5 @@
-%%%-------------------------------------------------------------------
-%%% @author yt
-%%% @copyright (C) 2014, <COMPANY>
-%%% @doc
-%%%
-%%% @end
-%%% Created : 03. Nov 2014 20:21
-%%%-------------------------------------------------------------------
 -module(payment).
--author("yt").
+-author("Yuriy Timoshenkov").
 -include("records.hrl").
 -export([save/1,validate/1]).
 

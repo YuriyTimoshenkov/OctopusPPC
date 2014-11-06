@@ -9,7 +9,7 @@
 -module(workflow_pay).
 -behaviour(gen_fsm).
 -include("records.hrl").
--export([start/1,stop/0,init/1,initial/2, transactionCreated/2, terminate/3]).
+-export([start/1,stop/0,init/1,initial/2, transaction_created/2, terminate/3]).
 
 
 start({P = #payment{}, WfrPid}) -> gen_fsm:start({local, workflow_pay}, workflow_pay, {P, WfrPid}, []).
@@ -19,22 +19,22 @@ stop()  -> gen_fsm:send_all_state_event(hello, stopit).
 
 
 init({P = #payment{}, WfrPid}) ->
-  gen_fsm:send_event(workflow_pay, createTransaction),
+  gen_fsm:send_event(workflow_pay, create_transaction),
   {ok, initial, {P, WfrPid}}.
 
-initial(createTransaction, {P = #payment{}, WfrPid}) ->
+initial(create_transaction, {P = #payment{}, WfrPid}) ->
   case (payment:validate(P)) of
     {#service{}, #payment_gate{}} ->
       payment:save(P),
-      gen_fsm:send_event(self(), registerWithMerchant),
-      {next_state, transactionCreated, {P, WfrPid}};
+      gen_fsm:send_event(self(), register_with_merchant),
+      {next_state, transaction_created, {P, WfrPid}};
     false ->
       change_payment_state({P, WfrPid, payment_failed})
   end.
 
 
 
-transactionCreated(registerWithMerchant, {P = #payment{}, WfrPid}) ->
+transaction_created(register_with_merchant, {P = #payment{}, WfrPid}) ->
   case (service:register_payment(P)) of
     ok ->
       change_payment_state({P, WfrPid, payment_successful});
