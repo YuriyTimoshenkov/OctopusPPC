@@ -1,0 +1,12 @@
+  {application, octopusppc,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, octopusppc},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, {octopusppc, []}},
+  {env, []}
+ ]}.
