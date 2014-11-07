@@ -6,9 +6,16 @@
 
 
 start(_StartType, _StartArgs) ->
+  lists:foreach(fun(App) ->
+    ok = application:start(App)
+  end,
+    [crypto,
+      ranch,
+      cowlib, cowboy]),
+
   Dispatch = cowboy_router:compile([
     {'_', [
-      {"/", toppage_handler, []}
+      {"/", http_handler, []}
     ]}
   ]),
   {ok, _} = cowboy:start_http(http, 100, [{port, 8083}], [
