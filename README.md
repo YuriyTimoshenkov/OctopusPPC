@@ -1,37 +1,37 @@
-##OctopusPPC
+##Octopus PPC
 
-###[ Compile ]
+######As Is
+Tiny Payment Processing Center engine with support of:
+- payment by account API & workflow
+- no DB integration
+- no custom partners API
 
-1>erl -make
+######To Be
+Payment Processing Center with support of:
+- different types of payment gates
+- custom Octopus API
+- custom partners API
+- DSL for billing calculation
+- high performance
+- no UI for configuration & support
 
+####Run shell
 
-###[ Run ]
+```sh
+> make
+> make shell
+> octopusppc:start(a,b)
+```
 
-1>erl -pa ebin/
+######Execute http GET request
 
-2>application:load(octopusppc).
-3>application:start(octopusppc).
+http://localhost:8083/?gate_id=1&service_id=1&amount=13.3&account=bob@gmail.com 
 
-/*
-Account, Amount, Payment Gate Id, Service Id
-*/
-4>pay('bob@gmail.com', 13.13, 1, 1).
-
-
-###[ Example ]
-
-1> application:load(octopusppc).
-ok
-
-2> application:start(octopusppc).
-ok
-
-3> octopusppc:pay('bob@gmail.com', 13.13, 1, 1).
-<0.42.0>
-
-4> flush().
-Shell got {payment_successful,
-              {payment,1,1,13.13,'bob@gmail.com',payment_successful}}
-ok
+######And you will receive response
+http://localhost:8083/?gate_id=1&service_id=1&amount=13.3&account=bob@gmail.cmo
 
 
+
+####Run release
+
+Work in progress
