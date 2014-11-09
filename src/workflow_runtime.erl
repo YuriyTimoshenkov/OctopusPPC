@@ -28,7 +28,7 @@ handle_call({pay, P = #payment{}}, _From, State) ->
   {ClientPid, _} = _From,
   {reply, WPid, [{WPid,#workflow{client_pid = ClientPid, workflow_pid = WMRef, workflow_monitor_ref = WMRef, payment = P}}| State]};
 
-handle_call(getState, _From, State) ->
+handle_call(get_state, _From, State) ->
   {reply, State, State};
 
 handle_call({Payment_result, P = #payment{}}, _From, State) ->

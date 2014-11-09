@@ -5,7 +5,9 @@
 
 
 load(Id) ->
-  #service{id=Id,name=lol, comission= 10}.
+  {ok, Connection} = mongo:connect(localhost, 27017, <<"OctopusPPC">>),
+  {{_,_,_,_,_,Name,_,Commision}} = mongo:find_one(Connection, <<"Service">>, {id,Id}),
+  #service{id=Id,name=Name, comission= Commision}.
 
 register_payment(#payment{}) ->
   ok.

@@ -2,7 +2,7 @@
 -author("Yuriy Timoshenkov").
 -behaviour(application).
 -include("records.hrl").
--export([start/2, stop/1, pay/0, pay/4, getState/0]).
+-export([start/2, stop/1, pay/0, pay/4, get_state/0, tm/0]).
 
 
 start(_StartType, _StartArgs) ->
@@ -11,7 +11,7 @@ start(_StartType, _StartArgs) ->
   end,
     [crypto,
       ranch,
-      cowlib, cowboy]),
+      cowlib, cowboy,bson,mongodb]),
 
   Dispatch = cowboy_router:compile([
     {'_', [
@@ -33,5 +33,9 @@ pay(Account, Amount, GateId, ServiceId) ->
   gen_server:call(workflow_runtime,{pay,#payment{gate_id=GateId,service_id=ServiceId,amount=Amount,account=Account}}).
 
 
-getState()->
+get_state()->
   gen_server:call(workflow_runtime,getState).
+
+tm() ->
+  {ok, Connection} = mongo:connect(localhost, 27017, local),
+  mongo:find_one(Connection, testC, {p1,3}).
