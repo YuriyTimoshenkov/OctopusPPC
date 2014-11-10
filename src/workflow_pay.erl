@@ -12,20 +12,20 @@
 -export([start/1,stop/0,init/1,initial/2, transaction_created/2, terminate/3]).
 
 
-start({P = #payment{}, WfrPid}) -> gen_fsm:start({local, workflow_pay}, workflow_pay, {P, WfrPid}, []).
+start({P = #payment{}, WfrPid, Configuration}) -> gen_fsm:start({local, workflow_pay}, workflow_pay, {P, WfrPid, Configuration}, []).
 
 
 stop()  -> gen_fsm:send_all_state_event(hello, stopit).
 
 
-init({P = #payment{}, WfrPid}) ->
+init({P = #payment{}, WfrPid, Configuration}) ->
   gen_fsm:send_event(workflow_pay, create_transaction),
-  {ok, initial, {P, WfrPid}}.
+  {ok, initial, {P, WfrPid, Configuration}}.
 
-initial(create_transaction, {P = #payment{}, WfrPid}) ->
-  case (payment:validate(P)) of
+initial(create_transaction, {P = #payment{}, WfrPid, Configuration}) ->
+  case (payment:validate(P,Configuration)) of
     {#service{}, #payment_gate{}} ->
-      P2 = payment:save(P),
+      P2 = payment:save(P, Configuration),
       gen_fsm:send_event(self(), register_with_merchant),
       {next_state, transaction_created, {P2, WfrPid}};
     false ->

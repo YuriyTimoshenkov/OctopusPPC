@@ -10,44 +10,51 @@
 -author("yt").
 -behaviour(gen_server).
 
--export([start_link/0]).
+-export([start_link/1]).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2]).
 
 -include("records.hrl").
 
-start_link() ->
-  gen_server:start_link({local, workflow_runtime}, workflow_runtime,[],[]).
+start_link(Configuration) ->
+  gen_server:start_link({local, workflow_runtime}, workflow_runtime,Configuration,[]).
 
-init([]) ->
-  {ok,[]}.
+init([Configuration]) ->
+  {ok,{[],Configuration}}.
 
 
 handle_call({pay, P = #payment{}}, _From, State) ->
-  {ok, WPid} = workflow_pay:start({P, self()}),
+  {PaymentList,Configuration} = State,
+  {ok, WPid} = workflow_pay:start({P, self(),Configuration}),
   WMRef = erlang:monitor(process,WPid),
   {ClientPid, _} = _From,
-  {reply, WPid, [{WPid,#workflow{client_pid = ClientPid, workflow_pid = WMRef, workflow_monitor_ref = WMRef, payment = P}}| State]};
+  {reply, WPid,
+    {
+      [{WPid,#workflow{client_pid = ClientPid, workflow_pid = WMRef, workflow_monitor_ref = WMRef, payment = P}}| PaymentList],
+      Configuration
+    }};
 
 handle_call(get_state, _From, State) ->
   {reply, State, State};
 
 handle_call({Payment_result, P = #payment{}}, _From, State) ->
   {WorkflowPid, _} = _From,
-  {_,Workflow = #workflow{}} = lists:keyfind(WorkflowPid, 1, State),
+  {PaymentList,Configuration} = State,
+  {_,Workflow = #workflow{}} = lists:keyfind(WorkflowPid, 1, PaymentList),
   CallerPid = Workflow#workflow.client_pid,
   WorkflowRef = Workflow#workflow.workflow_monitor_ref,
   erlang:demonitor(WorkflowRef),
   CallerPid ! {Payment_result, P},
-  NewState = lists:keydelete(_From, 1, State),
-  {reply, ok, NewState}.
+  NewPaymentList = lists:keydelete(_From, 1, PaymentList),
+  {reply, ok, {NewPaymentList,Configuration}}.
 
 
 handle_info({'DOWN', _, process, _Pid, _}, State) ->
-    {_,Workflow = #workflow{}} = lists:keyfind(_Pid, 1, State),
+    {PaymentList,Configuration} = State,
+    {_,Workflow = #workflow{}} = lists:keyfind(_Pid, 1, PaymentList),
     CallerPid = Workflow#workflow.client_pid,
     CallerPid ! {payment_failed,Workflow#workflow.payment},
-    NewState = lists:keydelete(_Pid, 1, State),
-    {noreply, NewState}.
+    NewPaymentList = lists:keydelete(_Pid, 1, PaymentList),
+    {noreply, {NewPaymentList, Configuration}}.
 
 
 handle_cast(_, State) ->

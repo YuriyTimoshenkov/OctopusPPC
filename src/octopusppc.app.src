@@ -10,5 +10,5 @@
                   mongodb
                  ]},
   {mod, {octopusppc, []}},
-  {env, []}
+  {env, [{db_type,payment_storage_mongodb}]}
  ]}.

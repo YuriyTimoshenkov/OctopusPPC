@@ -1,13 +1,16 @@
 -module(service).
 -author("Yuriy Timoshenkov").
--export([load/1,register_payment/1]).
+-export([load/2,register_payment/1]).
 -include("records.hrl").
 
 
-load(Id) ->
-  {ok, Connection} = mongo:connect(localhost, 27017, <<"OctopusPPC">>),
-  {{_,_,_,_,_,Name,_,Commision}} = mongo:find_one(Connection, <<"Service">>, {id,Id}),
-  #service{id=Id,name=Name, comission= Commision}.
+load(Id, Configuration) ->
+  {db,[{db_type,DBType}|_]} = Configuration,
+  case DBType of
+    mongo -> service_storage_mongodb:load(Id,Configuration);
+    _ -> error_db_not_supported
+  end.
+
 
 register_payment(#payment{}) ->
   ok.

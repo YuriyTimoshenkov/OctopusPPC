@@ -21,7 +21,7 @@ start(_StartType, _StartArgs) ->
   {ok, _} = cowboy:start_http(http, 100, [{port, 8083}], [
     {env, [{dispatch, Dispatch}]}
   ]),
-  octopusppc_sup:start_link().
+  octopusppc_sup:start_link({db,[{db_type,mongo},{host,localhost},{port,27017},{name,<<"OctopusPPC">>}]}).
 
 stop(_State) ->
     ok.
