@@ -3,7 +3,7 @@
 ######As Is
 Tiny Payment Processing Center engine with support of:
 - payment by account API & workflow
-- no DB integration
+- DB integration: mongo db
 - no custom partners API
 
 ######To Be
@@ -11,6 +11,7 @@ Payment Processing Center with support of:
 - different types of payment gates
 - custom Octopus API
 - custom partners API
+- security
 - DSL for billing calculation
 - high performance
 - no UI for configuration & support
