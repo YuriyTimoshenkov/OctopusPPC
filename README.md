@@ -16,21 +16,35 @@ Payment Processing Center with support of:
 - high performance
 - no UI for configuration & support
 
-####Run shell
+###Quick start
+
+####Build & run processing center
 
 ```sh
-> make
+> make deps
 > make shell
-> octopusppc:start(a,b)
+> application:start(octopusppc).
 ```
 
-######Execute http GET request
+####Init db
+
+```sh
+> octopusppc:init_db().
+```
+
+####Execute http GET request
 
 http://localhost:8083/?gate_id=1&service_id=1&amount=13.3&account=bob@gmail.com 
 
-######And you will receive response
-http://localhost:8083/?gate_id=1&service_id=1&amount=13.3&account=bob@gmail.cmo
+####And you will receive response
 
+```
+{"status":"ok","description":"payment_successful"}
+```
+
+####Check transaction in db
+
+Check Payment collection in db OctopusPPC 
 
 
 ####Run release
