@@ -3,7 +3,7 @@
 ######As Is
 Tiny Payment Processing Center engine with support of:
 - payment by account API & workflow
-- no DB integration
+- DB integration: mongo db
 - no custom partners API
 
 ######To Be
@@ -11,16 +11,25 @@ Payment Processing Center with support of:
 - different types of payment gates
 - custom Octopus API
 - custom partners API
+- security
 - DSL for billing calculation
 - high performance
 - no UI for configuration & support
 
-####Run shell
+####Quick start
+
+######Build & run processing center
 
 ```sh
-> make
+> make deps
 > make shell
-> octopusppc:start(a,b)
+> application:start(octopusppc).
+```
+
+######Init db
+
+```sh
+> octopusppc:init_db().
 ```
 
 ######Execute http GET request
@@ -28,8 +37,14 @@ Payment Processing Center with support of:
 http://localhost:8083/?gate_id=1&service_id=1&amount=13.3&account=bob@gmail.com 
 
 ######And you will receive response
-http://localhost:8083/?gate_id=1&service_id=1&amount=13.3&account=bob@gmail.cmo
 
+```
+{"status":"ok","description":"payment_successful"}
+```
+
+######Check transaction in db
+
+Check Payment collection in db OctopusPPC 
 
 
 ####Run release
