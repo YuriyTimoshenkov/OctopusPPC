@@ -7,7 +7,7 @@
 -define(CHILD(I, Type), {I, {I, start_link, []}, permanent, 5000, Type, [I]}).
 
 start_link(Configuration) ->
-    supervisor:start_link({local, ?MODULE}, ?MODULE, [Configuration]).
+    supervisor:start_link({local, ?MODULE}, ?MODULE, Configuration).
 
 %% ===================================================================
 %% Supervisor callbacks

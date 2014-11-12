@@ -5,10 +5,12 @@
   {registered, octopusppc},
   {applications, [
                   kernel,
-                  stdlib,
-                  bson,
-                  mongodb
+                  stdlib
                  ]},
   {mod, {octopusppc, []}},
-  {env, [{db_type,payment_storage_mongodb}]}
+  {env, [{app_config,
+    [
+      {db,[{db_type,mongo},{host,localhost},{port,27017},{name,<<"OctopusPPC2">>}]}
+    ]
+  }]}
  ]}.

@@ -18,7 +18,7 @@
 start_link(Configuration) ->
   gen_server:start_link({local, workflow_runtime}, workflow_runtime,Configuration,[]).
 
-init([Configuration]) ->
+init(Configuration) ->
   {ok,{[],Configuration}}.
 
 

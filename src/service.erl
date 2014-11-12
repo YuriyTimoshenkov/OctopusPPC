@@ -5,9 +5,10 @@
 
 
 load(Id, Configuration) ->
-  {db,[{db_type,DBType}|_]} = Configuration,
+  [DbConfig] = [X||{db,X}<-Configuration],
+  [DBType] = [X||{db_type,X}<-DbConfig],
   case DBType of
-    mongo -> service_storage_mongodb:load(Id,Configuration);
+    mongo -> service_storage_mongodb:load(Id,DbConfig);
     _ -> error_db_not_supported
   end.
 

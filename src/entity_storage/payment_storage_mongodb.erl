@@ -16,7 +16,7 @@
 
 
 save(P = #payment{}, Configuration) ->
-  {db,[_,{host,Host},{port,Port},{name,Name}]} = Configuration,
+  [_,{host,Host},{port,Port},{name,Name}] = Configuration,
   case (P#payment.id) of
     undefined ->
       {ok, Connection} = mongo:connect(Host, Port, Name),

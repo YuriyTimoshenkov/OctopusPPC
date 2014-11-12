@@ -27,25 +27,25 @@ initial(create_transaction, {P = #payment{}, WfrPid, Configuration}) ->
     {#service{}, #payment_gate{}} ->
       P2 = payment:save(P, Configuration),
       gen_fsm:send_event(self(), register_with_merchant),
-      {next_state, transaction_created, {P2, WfrPid}};
+      {next_state, transaction_created, {P2, WfrPid, Configuration}};
     false ->
-      change_payment_state({P, WfrPid, payment_failed})
+      change_payment_state({P, WfrPid, Configuration, payment_failed})
   end.
 
 
 
-transaction_created(register_with_merchant, {P = #payment{}, WfrPid}) ->
+transaction_created(register_with_merchant, {P = #payment{}, WfrPid, Configuration}) ->
   case (service:register_payment(P)) of
     ok ->
-      change_payment_state({P, WfrPid, payment_successful});
+      change_payment_state({P, WfrPid, Configuration, payment_successful});
     _ ->
-      change_payment_state({P, WfrPid, payment_failed})
+      change_payment_state({P, WfrPid, Configuration, payment_failed})
   end.
 
-change_payment_state({P = #payment{}, WfrPid, NewState}) ->
+change_payment_state({P = #payment{}, WfrPid, Configuration, NewState}) ->
   PFinal = P#payment{status = NewState},
+  payment:save(PFinal, Configuration),
   gen_server:call(WfrPid, {NewState, PFinal}),
-  payment:save(PFinal),
   {stop, normal, {PFinal, wfrPid}}.
 
 

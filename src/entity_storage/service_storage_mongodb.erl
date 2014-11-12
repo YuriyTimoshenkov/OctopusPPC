@@ -14,7 +14,7 @@
 
 
 load(Id, Configuration) ->
-  {db,[_,{host,Host},{port,Port},{name,Name}]} = Configuration,
+  [_,{host,Host},{port,Port},{name,Name}] = Configuration,
   {ok, Connection} = mongo:connect(Host, Port, Name),
   {{_,_,_,_,_,ServiceName,_,Commision}} = mongo:find_one(Connection, <<"Service">>, {<<"Id">>,Id}),
   #service{id=Id,name=ServiceName, comission= Commision}.

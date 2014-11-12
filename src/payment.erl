@@ -6,9 +6,10 @@
 
 
 save(P = #payment{}, Configuration) ->
-  {db,[{db_type,DBType}|_]} = Configuration,
+  [DbConfig] = [X||{db,X}<-Configuration],
+  [DBType] = [X||{db_type,X}<-DbConfig],
   case DBType of
-    mongo -> payment_storage_mongodb:save(P, Configuration);
+    mongo -> payment_storage_mongodb:save(P, DbConfig);
     _ -> error_db_not_supported
   end.
 
