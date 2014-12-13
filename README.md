@@ -19,7 +19,7 @@ Payment Processing Center with support of:
 - DSL for billing calculation
 - high performance
 - no UI for configuration & support
-- logging support
+- logging
 
 ####Quick start
 
