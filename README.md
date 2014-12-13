@@ -4,7 +4,9 @@
 
 ######As Is
 Tiny Payment Processing Center engine with support of:
-- payment by account: API & workflow implemented
+- payment by account
+  - API & workflow implemented
+  - billing with static formula
 - DB integration: mongo db
 - no custom partners API
 
