@@ -4,7 +4,7 @@
 
 ######As Is
 Tiny Payment Processing Center engine with support of:
-- payment by account API & workflow
+- payment by account: API & workflow implemented
 - DB integration: mongo db
 - no custom partners API
 
@@ -17,6 +17,7 @@ Payment Processing Center with support of:
 - DSL for billing calculation
 - high performance
 - no UI for configuration & support
+- logging support
 
 ####Quick start
 
