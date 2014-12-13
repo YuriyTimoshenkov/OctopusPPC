@@ -16,7 +16,7 @@ save(P = #payment{}, Configuration) ->
 validate(P = #payment{},Configuration) ->
   case(service:load(P#payment.service_id, Configuration)) of
     S = #service{} ->
-      case(payment_gate:load(P#payment.gate_id)) of
+      case(payment_gate:load(P#payment.gate_id, Configuration)) of
         Pg = #payment_gate{} -> {S,Pg};
         empty -> false
       end;

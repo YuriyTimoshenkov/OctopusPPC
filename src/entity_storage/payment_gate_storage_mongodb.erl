@@ -6,7 +6,7 @@
 %%% @end
 %%% Created : 10. Nov 2014 11:13 PM
 %%%-------------------------------------------------------------------
--module(service_storage_mongodb).
+-module(payment_gate_storage_mongodb).
 -author("yt").
 -include("../records.hrl").
 %% API
@@ -16,5 +16,5 @@
 load(Id, Configuration) ->
   [_,{host,Host},{port,Port},{name,Name}] = Configuration,
   {ok, Connection} = mongo:connect(Host, Port, Name),
-  {{_,_,_,_,_,ServiceName,_,Discount}} = mongo:find_one(Connection, <<"Service">>, {<<"Id">>,Id}),
-  #service{id=Id,name=ServiceName, discount=Discount}.
+  {{_,_,_,_,_,PaymentGateName,_,Commission}} = mongo:find_one(Connection, <<"PaymentGate">>, {<<"Id">>,Id}),
+  #payment_gate{id=Id,name=PaymentGateName, comission=Commission}.

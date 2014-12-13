@@ -24,10 +24,11 @@ init({P = #payment{}, WfrPid, Configuration}) ->
 
 initial(create_transaction, {P = #payment{}, WfrPid, Configuration}) ->
   case (payment:validate(P,Configuration)) of
-    {#service{}, #payment_gate{}} ->
-      P2 = payment:save(P, Configuration),
+    {Service = #service{}, PaymentGate = #payment_gate{}} ->
+      P2 = billing_calculator:calculate(P,Service,PaymentGate),
+      P3 = payment:save(P2, Configuration),
       gen_fsm:send_event(self(), register_with_merchant),
-      {next_state, transaction_created, {P2, WfrPid, Configuration}};
+      {next_state, transaction_created, {P3, WfrPid, Configuration}};
     false ->
       change_payment_state({P, WfrPid, Configuration, payment_failed})
   end.

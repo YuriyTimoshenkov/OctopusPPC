@@ -25,8 +25,12 @@ save(P = #payment{}, Configuration) ->
           {service_id,P#payment.service_id,
             payment_gate_id, P#payment.gate_id,
             account, P#payment.account,
-            amount, P#payment.amount,
-            status, P#payment.status}
+            status, P#payment.status,
+            client_amount, P#payment.client_amount,
+            payment_gate_commission, P#payment.payment_gate_commission,
+            service_discount, P#payment.service_discount,
+            service_amount, P#payment.service_amount
+          }
         ]),
       PaymentId = element(tuple_size(Result),Result),
       P#payment{id = PaymentId};

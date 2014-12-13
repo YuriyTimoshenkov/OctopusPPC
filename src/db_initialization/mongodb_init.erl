@@ -19,14 +19,14 @@ init(Configuration) ->
     [
       {<<"Id">>,1,
         <<"Name">>, test,
-        <<"Comission">>, 5
+        <<"Discount">>, 5
       }
     ]),
   mongo:insert(Connection, <<"PaymentGate">>,
     [
       {<<"Id">>,1,
         <<"Name">>, test,
-        <<"Comission">>, 5
+        <<"Comission">>, 2
       }
     ]),
   ok.

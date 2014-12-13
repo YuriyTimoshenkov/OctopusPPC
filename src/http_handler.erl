@@ -13,7 +13,10 @@ init(Req, Opts) ->
     account := Account} =
     cowboy_req:match_qs([gate_id, service_id, amount, account], Req),
 
-  PaymentResult = process_payment(list_to_integer(bitstring_to_list(GateId)), list_to_integer(bitstring_to_list(ServiceId)), Amount, Account),
+  PaymentResult = process_payment(
+    list_to_integer(bitstring_to_list(GateId)),
+    list_to_integer(bitstring_to_list(ServiceId)),
+    list_to_float(bitstring_to_list(Amount)), Account),
 
   ReqResult = 	cowboy_req:reply(200, [
     {<<"content-type">>, <<"application/json; charset=utf-8">>}

@@ -1,8 +1,13 @@
 -module(payment_gate).
 -author("Yuriy Timoshenkov").
 -include("records.hrl").
--export([load/1]).
+-export([load/2]).
 
 
-load(Id) ->
-  #payment_gate{id= Id, name = pg1, comission = 5}.
+load(Id, Configuration) ->
+  [DbConfig] = [X||{db,X}<-Configuration],
+  [DBType] = [X||{db_type,X}<-DbConfig],
+  case DBType of
+    mongo -> payment_gate_storage_mongodb:load(Id,DbConfig);
+    _ -> error_db_not_supported
+  end.
