@@ -18,14 +18,15 @@ init(Configuration) ->
   mongo:insert(Connection, <<"Service">>,
     [
       {<<"Id">>,1,
-        <<"Name">>, test,
-        <<"Discount">>, 5
+        <<"Name">>, <<"test">>,
+        <<"Discount">>, 5,
+        <<"Configuration">>, [{<<"url">>,<<"www.googl.com">>,<<"signkey">>,<<"3DSde33dsd##4ff">>}]
       }
     ]),
   mongo:insert(Connection, <<"PaymentGate">>,
     [
       {<<"Id">>,1,
-        <<"Name">>, test,
+        <<"Name">>, <<"test">>,
         <<"Comission">>, 2
       }
     ]),
