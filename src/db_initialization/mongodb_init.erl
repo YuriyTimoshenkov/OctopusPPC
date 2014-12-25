@@ -18,9 +18,10 @@ init(Configuration) ->
   mongo:insert(Connection, <<"Service">>,
     [
       {<<"Id">>,1,
-        <<"Name">>, <<"test">>,
+        <<"Name">>, <<"TestService1">>,
         <<"Discount">>, 5,
-        <<"Configuration">>, [{<<"url">>,<<"www.googl.com">>,<<"signkey">>,<<"3DSde33dsd##4ff">>}]
+        <<"MerchantType">>, <<"Shopify">>,
+        <<"Configuration">>, [{<<"url">>,<<"http://localhost:8083/shopify/:order_id/createorder">>,<<"signkey">>,<<"3DSde33dsd##4ff">>}]
       }
     ]),
   mongo:insert(Connection, <<"PaymentGate">>,

@@ -8,12 +8,15 @@
 init(Req, Opts) ->
   OrderId = list_to_integer(bitstring_to_list(cowboy_req:binding(order_id, Req))),
   {ok, Body, Req2} = cowboy_req:body(Req),
-  io:fwrite("Body is: ~p ~n",[Body]),
+
+  Transaction = jiffy:decode(Body),
+  {[{_,{[{_,Amount},_]}}]} = Transaction,
+
   ReqResult = 	cowboy_req:reply(200, [
     {<<"content-type">>, <<"application/json; charset=utf-8">>}
   ], io_lib:format("{
   \"transaction\": {
-    \"amount\": \"10.00\",
+    \"amount\": ~p,
     \"authorization\": null,
     \"created_at\": \"2014-11-20T13:45:30-05:00\",
     \"currency\": \"USD\",
@@ -32,7 +35,7 @@ init(Req, Opts) ->
     \"receipt\": {},
     \"error_code\": null
   }
-}",[OrderId]), Req2),
+}",[Amount, OrderId]), Req2),
   {ok, ReqResult, Opts}.
 
 
