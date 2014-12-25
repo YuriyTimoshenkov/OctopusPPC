@@ -7,8 +7,10 @@ Tiny Payment Processing Center engine with support of:
 - payment by account
   - API & workflow implemented
   - billing calculator with static formula
+  - payment of [Shopify](http://docs.shopify.com/) orders
 - DB integration: mongo db
 - no custom partners API
+- integration possibility of merchant with custom API and configuration 
 
 ######To Be
 Payment Processing Center with support of:
