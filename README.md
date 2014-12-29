@@ -8,7 +8,7 @@ Tiny Payment Processing Center engine with support of:
   - payment of [Shopify](http://docs.shopify.com/) orders (exmaple of online shop integration)
 - DB integration: mongo db
 - no custom partners API
-- integration possibility of merchant with custom API and configuration 
+- possibility of integration with custom merchant api and configuration
 
 <br/>
 
