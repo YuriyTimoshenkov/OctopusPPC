@@ -5,7 +5,7 @@ Tiny Payment Processing Center engine with support of:
 - payment by account, order
   - API & workflow implemented
   - billing calculator with static formula
-  - payment of [Shopify](http://docs.shopify.com/) orders
+  - payment of [Shopify](http://docs.shopify.com/) orders (exmaple of online shop integration)
 - DB integration: mongo db
 - no custom partners API
 - integration possibility of merchant with custom API and configuration 
@@ -16,7 +16,7 @@ Tiny Payment Processing Center engine with support of:
 Payment Processing Center with support of:
 - different types of payment gates
 - custom Octopus API
-- custom partners API
+- popular online shops integration
 - security
 - DSL for billing calculation
 - high performance
