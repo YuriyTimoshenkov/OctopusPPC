@@ -1,16 +1,16 @@
-![Logo] (https://avatars0.githubusercontent.com/u/9568895?v=3&s=460)
-
 ##Octopus PPC
 
 ######As Is
 Tiny Payment Processing Center engine with support of:
-- payment by account
+- payment by account, order
   - API & workflow implemented
   - billing calculator with static formula
   - payment of [Shopify](http://docs.shopify.com/) orders
 - DB integration: mongo db
 - no custom partners API
 - integration possibility of merchant with custom API and configuration 
+
+<br/>
 
 ######To Be
 Payment Processing Center with support of:
@@ -23,9 +23,35 @@ Payment Processing Center with support of:
 - no UI for configuration & support
 - logging
 
-####Quick start
+<br/>
+![Logo] (https://lh4.googleusercontent.com/BDRNyVY-MBRbMHoRg2h6iOGYH065cm-VNYN_dellF7rdPJJx8qLifKKLXM3abclIQUvc0EUVU_g=w1342-h532)
 
-######Build & run processing center
+
+<br/>
+###Common payment scenarios
+
+##### By account using kiosk
+1. Check your personal account in the merchant service
+2. Go to the kiosk
+3. Find and choose needed merchant service
+4. Input your account number
+5. Put cash in
+6. Press "Pay" button
+
+###### That's all - your account has been successfully credited!  
+<br/>
+
+##### By order using online banking
+1. Make an order in the online shop and press "Pay" button
+2. You will be redirected to the online banking private cabinet
+3. Check payment sum and press "Pay" button
+
+###### That's all - your order has been successfully paid!
+<br/>
+
+###Quick start
+
+#####Build & run processing center
 
 ```sh
 > make deps
@@ -33,25 +59,26 @@ Payment Processing Center with support of:
 > application:start(octopusppc).
 ```
 
-######Init db
+#####Init db
 
 ```sh
 > octopusppc:init_db().
 ```
 
-######Execute http GET request
+#####Execute http GET request
 
 http://localhost:8083/?gate_id=1&service_id=1&amount=13.3&account=bob@gmail.com 
 
-######And you will receive response
+#####And you will receive response
 
 ```
 {"status":"ok","description":"payment_successful"}
 ```
 
-######Check transaction in db
+#####Check transaction in db
 
 Check Payment collection in db OctopusPPC 
+<br/>
 
 
 ####Run release
