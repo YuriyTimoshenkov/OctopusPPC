@@ -24,7 +24,7 @@ Payment Processing Center with support of:
 - logging
 
 <br/>
-![Logo] (https://lh4.googleusercontent.com/BDRNyVY-MBRbMHoRg2h6iOGYH065cm-VNYN_dellF7rdPJJx8qLifKKLXM3abclIQUvc0EUVU_g=w1342-h532)
+![Logo] (https://lh4.googleusercontent.com/Wwnj926mvF8-ZB0hPlMUY9UecLTG7yySX202CF1iunnfOBrv8okT11epiMjfl07WyodS75ekMfg=w1576-h694)
 
 
 <br/>
