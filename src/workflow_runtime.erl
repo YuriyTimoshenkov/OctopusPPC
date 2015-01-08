@@ -11,7 +11,7 @@
 -behaviour(gen_server).
 
 -export([start_link/1]).
--export([init/1, handle_call/3, handle_cast/2, handle_info/2]).
+-export([init/1, handle_call/3, handle_cast/2, handle_info/2, code_change/3, terminate/2]).
 
 -include("records.hrl").
 
@@ -59,4 +59,8 @@ handle_info({'DOWN', _, process, _Pid, _}, State) ->
 
 handle_cast(_, State) ->
   {noreply, State}.
+
+code_change(_,_,_) -> ok.
+
+terminate(_,_) -> ok.
 

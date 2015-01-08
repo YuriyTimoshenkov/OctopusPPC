@@ -1,2 +1,3 @@
+PROJECT = octopusppc
 default: compile
-include otp_app.mk
+include erlang.mk

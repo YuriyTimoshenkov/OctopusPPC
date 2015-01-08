@@ -2,10 +2,16 @@
  [
   {description, ""},
   {vsn, "1"},
-  {registered, octopusppc},
+  {modules, []},
+  {registered, [octopusppc]},
   {applications, [
                   kernel,
-                  stdlib
+                  stdlib,
+                  ibrowse,
+                  mongodb,
+                  bson,
+                  cowboy,
+                  jiffy
                  ]},
   {mod, {octopusppc, []}},
   {env, [{app_config,

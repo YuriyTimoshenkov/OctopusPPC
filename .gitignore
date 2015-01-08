@@ -11,3 +11,9 @@ rel/example_project
 .rebar
 .idea
 *.iml
+_rel
+erlang.mk
+rel
+relx
+relx.config
+

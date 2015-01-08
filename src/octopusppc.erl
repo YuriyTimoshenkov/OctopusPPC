@@ -2,17 +2,11 @@
 -author("Yuriy Timoshenkov").
 -behaviour(application).
 -include("records.hrl").
--export([start/2, stop/1, pay/0, pay/4, get_state/0, init_db/0]).
+-export([start/2, stop/1, pay/0, pay/4, get_state/0, init_db/0, start_deps/0]).
 
 
 start(_StartType, _StartArgs) ->
   {ok,AppConfig} = application:get_env(octopusppc,app_config),
-  lists:foreach(fun(App) ->
-    ok = application:start(App)
-  end,
-    [crypto,
-      ranch,
-      cowlib, cowboy,bson,mongodb,ibrowse]),
 
   Dispatch = cowboy_router:compile([
     {'_', [
@@ -41,3 +35,12 @@ get_state()->
 init_db() ->
   {ok,AppConfig} = application:get_env(octopusppc,app_config),
   db_init:init(AppConfig).
+
+start_deps()->
+lists:foreach(fun(App) ->
+  ok = application:start(App)
+end,
+  [crypto,
+    ranch,
+    cowlib, cowboy,bson,mongodb,ibrowse]),
+  ok.

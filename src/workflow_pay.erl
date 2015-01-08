@@ -9,17 +9,17 @@
 -module(workflow_pay).
 -behaviour(gen_fsm).
 -include("records.hrl").
--export([start/1,stop/0,init/1,initial/2, transaction_created/2, terminate/3]).
+-export([start/1,stop/0,init/1,initial/2, transaction_created/2, terminate/3, handle_sync_event/4, handle_info/3, code_change/3,code_change/4, handle_event/3]).
 
 
-start({P = #payment{}, WfrPid, Configuration}) -> gen_fsm:start({local, workflow_pay}, workflow_pay, {P, WfrPid, Configuration}, []).
+start({P = #payment{}, WfrPid, Configuration}) -> gen_fsm:start(workflow_pay, {P, WfrPid, Configuration}, []).
 
 
 stop()  -> gen_fsm:send_all_state_event(hello, stopit).
 
 
 init({P = #payment{}, WfrPid, Configuration}) ->
-  gen_fsm:send_event(workflow_pay, create_transaction),
+  gen_fsm:send_event(self(), create_transaction),
   {ok, initial, {P, WfrPid, Configuration}}.
 
 initial(create_transaction, {P = #payment{}, WfrPid, Configuration}) ->
@@ -50,5 +50,15 @@ change_payment_state({P = #payment{}, WfrPid, Configuration, NewState}) ->
   {stop, normal, {PFinal, wfrPid}}.
 
 
-terminate(normal, _StateName, _StateData) ->
+terminate(_,_,_) ->
   ok.
+
+code_change(_,_,_) -> ok.
+
+code_change(_,_,_,_) -> ok.
+
+handle_event(_,_,_) -> ok.
+
+handle_info(_,_,_) -> ok.
+
+handle_sync_event(_,_,_,_) -> ok.
