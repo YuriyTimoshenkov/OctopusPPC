@@ -17,9 +17,9 @@
 
 save(P = #payment{}, Configuration) ->
   [_,{host,Host},{port,Port},{name,Name}] = Configuration,
+  {ok, Connection} = mongo:connect(Host, Port, Name),
   case (P#payment.id) of
     undefined ->
-      {ok, Connection} = mongo:connect(Host, Port, Name),
       [Result] = mongo:insert(Connection, <<"Payment">>,
         [
           {service_id,P#payment.service_id,
@@ -34,5 +34,9 @@ save(P = #payment{}, Configuration) ->
         ]),
       PaymentId = element(tuple_size(Result),Result),
       P#payment{id = PaymentId};
-    _ -> ok
+    _ ->
+      Command = {'$set', {
+        status, P#payment.status
+      }},
+      mongo:update(Connection, <<"Payment">>, {'_id', P#payment.id}, Command)
   end.

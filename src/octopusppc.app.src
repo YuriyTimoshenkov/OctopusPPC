@@ -14,6 +14,7 @@
                   jiffy
                  ]},
   {mod, {octopusppc, []}},
+  {error_logger,{file,"test.log"}},
   {env, [{app_config,
     [
       {db,[{db_type,mongo},{host,localhost},{port,27017},{name,<<"OctopusPPC2">>}]}

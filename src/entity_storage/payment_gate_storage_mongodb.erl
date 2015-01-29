@@ -17,4 +17,5 @@ load(Id, Configuration) ->
   [_,{host,Host},{port,Port},{name,Name}] = Configuration,
   {ok, Connection} = mongo:connect(Host, Port, Name),
   {{_,_,_,_,_,PaymentGateName,_,Commission}} = mongo:find_one(Connection, <<"PaymentGate">>, {<<"Id">>,Id}),
+  %gen_server:call(Connection,{stop, bob}),
   #payment_gate{id=Id,name=PaymentGateName, comission=Commission}.

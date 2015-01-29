@@ -14,7 +14,7 @@ start_link(Configuration) ->
 %% ===================================================================
 
 init(Configuration) ->
-    {ok, { {one_for_one, 5, 10},
+    {ok, { {one_for_one, 1, 10},
       [
         {workflow_runtime,
         {workflow_runtime,start_link,[Configuration]},

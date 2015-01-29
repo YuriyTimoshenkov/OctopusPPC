@@ -42,5 +42,5 @@ lists:foreach(fun(App) ->
 end,
   [crypto,
     ranch,
-    cowlib, cowboy,bson,mongodb,ibrowse]),
+    cowlib, cowboy,bson,mongodb,ibrowse, jiffy]),
   ok.
