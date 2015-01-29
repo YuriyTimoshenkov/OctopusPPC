@@ -12,8 +12,5 @@ rel/example_project
 .idea
 *.iml
 _rel
-erlang.mk
 rel
-relx
-relx.config
 
