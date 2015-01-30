@@ -2,7 +2,7 @@
 -author("Yuriy Timoshenkov").
 -behaviour(application).
 -include("records.hrl").
--export([start/2, stop/1, pay/0, pay/4, get_state/0, init_db/0, start_deps/0]).
+-export([start/2, stop/1, pay/4, get_state/0, init_db/0, start_deps/0]).
 
 
 start(_StartType, _StartArgs) ->
