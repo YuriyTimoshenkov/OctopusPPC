@@ -22,9 +22,6 @@ start(_StartType, _StartArgs) ->
 stop(_State) ->
     ok.
 
-pay()->
-pay('bob@gmail.com', 13.13, 1, 1).
-
 pay(Account, Amount, GateId, ServiceId) ->
   gen_server:call(workflow_runtime,{pay,#payment{gate_id=GateId,service_id=ServiceId,client_amount=Amount,account=Account}}).
 
