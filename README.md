@@ -51,33 +51,32 @@ Payment Processing Center with support of:
 
 ###Quick start
 
-#####Clone git repo
+####Clone git repo
 
-#####Build processing center
+####Build processing center 
 
 ```sh
 > make all
 ```
 
-#####Init db
+####Init db
 
 ```sh
-> make shell
-> application:load(octopusppc).
+> ./_rel/octopusppc_release/bin/octopusppc_release console
 > octopusppc:init_db().
 ```
 
-#####Execute http GET request
+####Execute http GET request
 
-http://localhost:8083/?gate_id=1&service_id=1&amount=13.3&account=bob@gmail.com 
+http://localhost:8083/?gate_id=1&service_id=1&amount=13.3&account=777666777
 
-#####And you will receive response
+####And you will receive response
 
 ```
 {"status":"ok","description":"payment_successful"}
 ```
 
-#####Check transaction in db
+####Check transaction in db
 
 Check Payment collection in db OctopusPPC 
 <br/>
