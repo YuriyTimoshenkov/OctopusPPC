@@ -12,5 +12,4 @@ rel/example_project
 .idea
 *.iml
 _rel
-rel
 .erlang.mk.packages.v2
