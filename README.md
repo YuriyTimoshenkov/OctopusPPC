@@ -51,17 +51,19 @@ Payment Processing Center with support of:
 
 ###Quick start
 
-#####Build & run processing center
+#####Clone git repo
+
+#####Build processing center
 
 ```sh
-> make deps
-> make shell
-> application:start(octopusppc).
+> make all
 ```
 
 #####Init db
 
 ```sh
+> make shell
+> application:load(octopusppc).
 > octopusppc:init_db().
 ```
 
@@ -81,6 +83,6 @@ Check Payment collection in db OctopusPPC
 <br/>
 
 
-####Run release
+###Dependencies
 
-Work in progress
+Erlang OPT 17.0 or higher
