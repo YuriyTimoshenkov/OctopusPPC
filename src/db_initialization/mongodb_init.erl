@@ -13,8 +13,8 @@
 -export([init/1]).
 
 init(Configuration) ->
-  [_,{host,Host},{port,Port},{name,Name}] = Configuration,
-  {ok, Connection} = mongo:connect(Host, Port, Name),
+  [_,{host,_},{port,_},{name,Name}] = Configuration,
+  {ok, Connection} = mongo:connect(Name),
   mongo:insert(Connection, <<"Service">>,
     [
       {<<"Id">>,1,

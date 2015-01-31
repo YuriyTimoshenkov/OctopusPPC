@@ -15,8 +15,8 @@
 
 
 load(Id, Configuration) ->
-  [_,{host,Host},{port,Port},{name,Name}] = Configuration,
-  {ok, Connection} = mongo:connect(Host, Port, Name),
-  {{_,_,_,_,'Name',ServiceName,_,Discount,'MerchantType',MerchantType,_,[{_,Url,_,SignKey}]}} = mongo:find_one(Connection, <<"Service">>, {<<"Id">>,Id}),
+  [_,{host,_},{port,_},{name,Name}] = Configuration,
+  {ok, Connection} = mongo:connect(Name),
+  {{_,_,'Name',ServiceName,_,Discount,'MerchantType',MerchantType,_,[{_,Url,_,SignKey}],_,_}} = mongo:find_one(Connection, <<"Service">>, {<<"Id">>,Id}),
   %gen_server:call(Connection,{stop, bob}),
   #service{id=Id,name=ServiceName, discount=Discount,configuration = [{url,Url},{sign_key,SignKey}], merchant_type = MerchantType}.
