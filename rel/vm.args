@@ -4,6 +4,8 @@
 ## Cookie for distributed erlang
 -setcookie octopusppc_release
 
+{parse_transform, lager_transform}
+
 ## Heartbeat management; auto-restarts VM if it dies or becomes unresponsive
 ## (Disabled by default..use with caution!)
 ##-heart

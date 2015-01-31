@@ -11,7 +11,8 @@
                   mongodb,
                   bson,
                   cowboy,
-                  jiffy
+                  jiffy,
+		  lager
                  ]},
   {mod, {octopusppc, []}},
   {error_logger,{file,"test.log"}},
@@ -20,4 +21,5 @@
       {db,[{db_type,mongo},{host,localhost},{port,27017},{name,<<"OctopusPPC2">>}]}
     ]
   }]}
+
  ]}.

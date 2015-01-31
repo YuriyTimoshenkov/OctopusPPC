@@ -4,8 +4,12 @@
 -module(http_handler).
 -include("../records.hrl").
 -export([init/2]).
+-compile([{parse_transform, lager_transform}]).
 
 init(Req, Opts) ->
+	lager:error("Some message"),
+error_logger:info_msg("tetggg"),
+
   #{
     gate_id := GateId,
     service_id := ServiceId,
