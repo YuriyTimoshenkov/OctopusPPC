@@ -2,7 +2,7 @@
 -author("Yuriy Timoshenkov").
 -behaviour(application).
 -include("records.hrl").
--export([start/2, stop/1, pay/4, get_state/0, init_db/0, start_deps/0]).
+-export([start/2, stop/1, pay/5, get_state/0, init_db/0, start_deps/0]).
 
 
 start(_StartType, _StartArgs) ->
@@ -22,8 +22,10 @@ start(_StartType, _StartArgs) ->
 stop(_State) ->
     ok.
 
-pay(Account, Amount, GateId, ServiceId) ->
-  gen_server:call(workflow_runtime,{pay,#payment{gate_id=GateId,service_id=ServiceId,client_amount=Amount,account=Account}}).
+pay(Account, Amount, GateId, ServiceId, OperationId) ->
+  gen_server:call(
+    workflow_runtime,
+    {pay,#payment{gate_id=GateId,service_id=ServiceId,client_amount=Amount,account=Account}, OperationId}).
 
 
 get_state()->

@@ -12,7 +12,8 @@
                   bson,
                   cowboy,
                   jiffy,
-		  lager
+		              lager,
+                  uuid
                  ]},
   {mod, {octopusppc, []}},
   {error_logger,{file,"test.log"}},

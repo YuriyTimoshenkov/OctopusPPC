@@ -22,9 +22,9 @@ init(Configuration) ->
   {ok,{[],Configuration}}.
 
 
-handle_call({pay, P = #payment{}}, _From, State) ->
+handle_call({pay, P = #payment{}, OperationId}, _From, State) ->
   {PaymentList,Configuration} = State,
-  {ok, WPid} = workflow_pay:start({P, self(),Configuration}),
+  {ok, WPid} = workflow_pay:start({P, self(),Configuration, OperationId}),
   WMRef = erlang:monitor(process,WPid),
   {ClientPid, _} = _From,
   {reply, WPid,
