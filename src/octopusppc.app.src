@@ -13,7 +13,8 @@
                   cowboy,
                   jiffy,
 		              lager,
-                  uuid
+                  uuid,
+			lager_graylog_backend
                  ]},
   {mod, {octopusppc, []}},
   {error_logger,{file,"test.log"}},
