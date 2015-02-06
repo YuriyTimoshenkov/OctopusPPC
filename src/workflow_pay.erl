@@ -19,7 +19,7 @@ stop()  -> gen_fsm:send_all_state_event(hello, stopit).
 
 
 init({P = #payment{}, WfrPid, Configuration, OperationId}) ->
-  error_logger:info_msg("OpId: ~p. Workflow Pay has been started.",
+  error_logger:info_msg("OpId: [~p]. Workflow Pay has been started.",
     [uuid:to_string(OperationId)]),
 
   gen_fsm:send_event(self(), create_transaction),
@@ -31,8 +31,8 @@ initial(create_transaction, {P = #payment{}, WfrPid, Configuration, OperationId}
       P2 = billing_calculator:calculate(P,Service,PaymentGate),
       P3 = payment:save(P2, Configuration),
 
-      error_logger:info_msg("OpId: ~p. Transaction ~p has been saved to db.",
-        [uuid:to_string(OperationId), P#payment.id]),
+      error_logger:info_msg("OpId: [~p]. Transaction [~p] has been saved to db with state [~p].",
+        [uuid:to_string(OperationId),  P3#payment.id, P3#payment.status]),
 
       gen_fsm:send_event(self(), register_with_merchant),
       {next_state, transaction_created, {{P3,Service, PaymentGate}, WfrPid, Configuration, OperationId}};
@@ -43,10 +43,18 @@ initial(create_transaction, {P = #payment{}, WfrPid, Configuration, OperationId}
 
 
 transaction_created(register_with_merchant, {{P = #payment{}, Service = #service{}, PaymentGate = #payment_gate{}}, WfrPid, Configuration, OperationId}) ->
-  case (service:register_payment(P, Service, PaymentGate )) of
+  case (service:register_payment(P, Service, PaymentGate, OperationId)) of
     ok ->
+
+      error_logger:info_msg("OpId: [~p]. Counterparty [~p] has been successfully notified.",
+        [uuid:to_string(OperationId), Service#service.name]),
+
       change_payment_state({P, WfrPid, Configuration, payment_successful, OperationId});
     _ ->
+
+      error_logger:info_msg("OpId: [~p]. Counterparty [~p] notification failed.",
+        [uuid:to_string(OperationId), Service#service.name]),
+
       change_payment_state({P, WfrPid, Configuration, payment_failed, OperationId})
   end.
 
@@ -54,8 +62,8 @@ change_payment_state({P = #payment{}, WfrPid, Configuration, NewState, Operation
   PFinal = P#payment{status = NewState},
   payment:save(PFinal, Configuration),
 
-  error_logger:info_msg("OpId: ~p. Transaction ~p has been saved to db.",
-    [uuid:to_string(OperationId), P#payment.id]),
+  error_logger:info_msg("OpId: [~p]. Transaction [~p] has been saved to db with  state [~p] ",
+    [uuid:to_string(OperationId), P#payment.id, NewState]),
 
   gen_server:call(WfrPid, {NewState, PFinal}),
   {stop, normal, {PFinal, wfrPid}}.
