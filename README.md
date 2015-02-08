@@ -10,7 +10,7 @@ Tiny Payment Processing Center engine with support of:
 - no custom partners API
 - possibility of integration with custom merchant api and configuration
 - logging system with log processing engine build on top of
-  - [elasticsearch](http://www.elasticsearch.org/overview/)
+  - [Elasticsearch](http://www.elasticsearch.org/overview/)
   - [Graylog2](https://www.graylog.org/)
 
 <br/>
@@ -88,7 +88,7 @@ Check Payment collection in db OctopusPPC
 #####Consists of
 - logger, which collects and writes log with different levels(info, warning, error)
 - log index, which provide user with fast searching through the log messages and pretty web user interface 
-- two log messages destanation support
+- two log messages destination support
   - Graylog2
   - Syslog
 
